@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MV Labs - From complexity to clarity</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: #0a0a0a;
+            color: #f8fafc;
+        }
+
+        .system-grid {
+            background-image:
+                linear-gradient(to right, rgba(56, 189, 248, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(56, 189, 248, 0.05) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        .gradient-bg {
+            background: radial-gradient(circle at 30% 30%, rgba(20, 85, 180, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 70% 70%, rgba(56, 189, 248, 0.05) 0%, transparent 50%);
+        }
+
+        .product-card-hover {
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .product-card-hover:hover {
+            transform: translateY(-4px);
+            border-color: rgba(56, 189, 248, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .process-line {
+            position: relative;
+        }
+
+        .process-line:after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: -30px;
+            width: 30px;
+            height: 1px;
+            background: rgba(56, 189, 248, 0.4);
+        }
+
+        .process-line:last-child:after {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .process-line:after {
+                display: none;
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+
+<body class="gradient-bg min-h-screen">
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 backdrop-blur-md bg-black/70 border-b border-gray-900">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <div
+                        class="w-8 h-8 rounded-md bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center">
+                        <i data-lucide="flask-conical" class="w-4 h-4 text-white"></i>
+                    </div>
+                    <span class="text-xl font-semibold">MV Labs</span>
+                </div>
+
+                <div class="hidden md:flex space-x-8">
+                    <a href="#philosophy" class="text-gray-300 hover:text-cyan-400 transition-colors">Philosophy</a>
+                    <a href="#products" class="text-gray-300 hover:text-cyan-400 transition-colors">Products</a>
+                    <a href="#experiments" class="text-gray-300 hover:text-cyan-400 transition-colors">Experiments</a>
+                    <a href="#notes" class="text-gray-300 hover:text-cyan-400 transition-colors">Lab Notes</a>
+                    <a href="#contact" class="text-gray-300 hover:text-cyan-400 transition-colors">Contact</a>
+                </div>
+
+                <button id="mobile-menu-btn" class="md:hidden">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden mt-4 pb-2">
+                <div class="flex flex-col space-y-3">
+                    <a href="#philosophy"
+                        class="text-gray-300 hover:text-cyan-400 transition-colors py-2">Philosophy</a>
+                    <a href="#products" class="text-gray-300 hover:text-cyan-400 transition-colors py-2">Products</a>
+                    <a href="#experiments"
+                        class="text-gray-300 hover:text-cyan-400 transition-colors py-2">Experiments</a>
+                    <a href="#notes" class="text-gray-300 hover:text-cyan-400 transition-colors py-2">Lab Notes</a>
+                    <a href="#contact" class="text-gray-300 hover:text-cyan-400 transition-colors py-2">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="system-grid pt-16 pb-24 md:pt-24 md:pb-32">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto text-center">
+                <div
+                    class="mb-6 inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-gradient-to-r from-cyan-900/20 to-blue-900/20 border border-cyan-900/30">
+                    <i data-lucide="sparkles" class="w-4 h-4 text-cyan-400"></i>
+                    <span class="text-sm font-medium text-cyan-300">Systems Lab</span>
+                </div>
+
+                <h1 class="text-5xl md:text-7xl font-bold mb-6 tracking-tight">
+                    <span class="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">MV
+                        Labs</span>
+                </h1>
+
+                <h2 class="text-2xl md:text-3xl font-semibold text-gray-300 mb-6">From complexity to clarity.</h2>
+
+                <p class="text-xl text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed">
+                    MV Labs is a systems lab that designs tools and workflows that turn messy processes into clear,
+                    simple systems.
+                </p>
+
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="#products"
+                        class="px-8 py-3.5 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 rounded-lg font-medium transition-all duration-300 transform hover:-translate-y-0.5 shadow-lg hover:shadow-cyan-900/30">
+                        Explore Products
+                    </a>
+                    <a href="#experiments"
+                        class="px-8 py-3.5 border border-gray-700 hover:border-cyan-500/50 hover:bg-gray-900/50 rounded-lg font-medium transition-all duration-300">
+                        View Experiments
+                    </a>
+                </div>
+
+                <!-- Abstract System Diagram -->
+                <div class="mt-20 relative">
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="w-64 h-64 rounded-full border border-cyan-900/30 opacity-30"></div>
+                    </div>
+
+                    <div class="relative flex justify-center items-center">
+                        <!-- Network nodes -->
+                        <div
+                            class="absolute w-12 h-12 rounded-full border border-cyan-500/30 bg-gradient-to-br from-cyan-900/20 to-transparent flex items-center justify-center">
+                            <i data-lucide="cpu" class="w-5 h-5 text-cyan-400"></i>
+                        </div>
+
+                        <div
+                            class="absolute top-10 left-1/4 w-10 h-10 rounded-full border border-blue-500/30 bg-gradient-to-br from-blue-900/20 to-transparent flex items-center justify-center">
+                            <i data-lucide="database" class="w-4 h-4 text-blue-400"></i>
+                        </div>
+
+                        <div
+                            class="absolute top-10 right-1/4 w-10 h-10 rounded-full border border-cyan-500/30 bg-gradient-to-br from-cyan-900/20 to-transparent flex items-center justify-center">
+                            <i data-lucide="workflow" class="w-4 h-4 text-cyan-400"></i>
+                        </div>
+
+                        <div
+                            class="absolute bottom-10 left-1/4 w-10 h-10 rounded-full border border-blue-500/30 bg-gradient-to-br from-blue-900/20 to-transparent flex items-center justify-center">
+                            <i data-lucide="code" class="w-4 h-4 text-blue-400"></i>
+                        </div>
+
+                        <div
+                            class="absolute bottom-10 right-1/4 w-10 h-10 rounded-full border border-cyan-500/30 bg-gradient-to-br from-cyan-900/20 to-transparent flex items-center justify-center">
+                            <i data-lucide="zap" class="w-4 h-4 text-cyan-400"></i>
+                        </div>
+
+                        <!-- Connecting lines -->
+                        <svg class="absolute inset-0 w-full h-full" viewBox="0 0 400 400">
+                            <line x1="200" y1="200" x2="100" y2="100" stroke="rgba(56, 189, 248, 0.15)"
+                                stroke-width="1" />
+                            <line x1="200" y1="200" x2="300" y2="100" stroke="rgba(56, 189, 248, 0.15)"
+                                stroke-width="1" />
+                            <line x1="200" y1="200" x2="100" y2="300" stroke="rgba(56, 189, 248, 0.15)"
+                                stroke-width="1" />
+                            <line x1="200" y1="200" x2="300" y2="300" stroke="rgba(56, 189, 248, 0.15)"
+                                stroke-width="1" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Philosophy Section -->
+    <section id="philosophy" class="py-20">
+        <div class="container mx-auto px-4">
+            <div class="max-w-5xl mx-auto">
+                <div class="text-center mb-16 fade-in">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-6">The MV Labs Philosophy</h2>
+                    <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                        We focus on building simple systems that remove friction from real workflows. Complexity is
+                        inevitable; confusion is optional.
+                    </p>
+                </div>
+
+                <!-- Process Visualization -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-20">
+                    <div class="process-line text-center fade-in">
+                        <div
+                            class="w-16 h-16 rounded-full bg-gradient-to-br from-red-900/30 to-red-900/10 border border-red-800/30 flex items-center justify-center mx-auto mb-4">
+                            <i data-lucide="git-branch" class="w-8 h-8 text-red-400"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2">Messy Workflow</h3>
+                        <p class="text-gray-400">Identifying fragmented, inefficient processes</p>
+                    </div>
+
+                    <div class="process-line text-center fade-in">
+                        <div
+                            class="w-16 h-16 rounded-full bg-gradient-to-br from-amber-900/30 to-amber-900/10 border border-amber-800/30 flex items-center justify-center mx-auto mb-4">
+                            <i data-lucide="search" class="w-8 h-8 text-amber-400"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2">Understand the Problem</h3>
+                        <p class="text-gray-400">Analyzing root causes and user pain points</p>
+                    </div>
+
+                    <div class="process-line text-center fade-in">
+                        <div
+                            class="w-16 h-16 rounded-full bg-gradient-to-br from-cyan-900/30 to-cyan-900/10 border border-cyan-800/30 flex items-center justify-center mx-auto mb-4">
+                            <i data-lucide="palette" class="w-8 h-8 text-cyan-400"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2">Design a Simple System</h3>
+                        <p class="text-gray-400">Creating elegant, logical solutions</p>
+                    </div>
+
+                    <div class="text-center fade-in">
+                        <div
+                            class="w-16 h-16 rounded-full bg-gradient-to-br from-blue-900/30 to-blue-900/10 border border-blue-800/30 flex items-center justify-center mx-auto mb-4">
+                            <i data-lucide="package" class="w-8 h-8 text-blue-400"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2">Build Reusable Tools</h3>
+                        <p class="text-gray-400">Developing scalable products from systems</p>
+                    </div>
+                </div>
+
+                <div
+                    class="bg-gradient-to-br from-gray-900/50 to-gray-900/10 border border-gray-800 rounded-2xl p-8 md:p-12 fade-in">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                        <div>
+                            <h3 class="text-2xl font-semibold mb-4">Systems Over Tools</h3>
+                            <p class="text-gray-300 mb-6">
+                                Most tools address symptoms, not systems. We start with the entire workflow,
+                                map its components, and rebuild from first principles. The result is not just
+                                another app, but a coherent system that reduces cognitive load and amplifies output.
+                            </p>
+                            <div class="flex items-center space-x-4">
+                                <div class="flex items-center space-x-2">
+                                    <i data-lucide="check-circle" class="w-5 h-5 text-cyan-400"></i>
+                                    <span class="text-sm">Eliminate friction</span>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <i data-lucide="check-circle" class="w-5 h-5 text-cyan-400"></i>
+                                    <span class="text-sm">Reduce complexity</span>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <i data-lucide="check-circle" class="w-5 h-5 text-cyan-400"></i>
+                                    <span class="text-sm">Create clarity</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex justify-center">
+                            <div
+                                class="w-64 h-64 rounded-xl border border-gray-800 flex items-center justify-center bg-gradient-to-br from-gray-900 to-gray-950">
+                                <div class="text-center">
+                                    <div
+                                        class="w-20 h-20 rounded-full border-2 border-dashed border-cyan-500/30 flex items-center justify-center mx-auto mb-4">
+                                        <i data-lucide="infinity" class="w-10 h-10 text-cyan-400"></i>
+                                    </div>
+                                    <p class="text-gray-300 font-medium">System Thinking</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="py-20 bg-gradient-to-b from-black/0 to-gray-900/10">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">Products</h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                    Practical tools built from systems thinking, designed to simplify complex workflows.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
+                <!-- Product 1 -->
+                <div
+                    class="product-card-hover fade-in bg-gradient-to-br from-gray-900/40 to-gray-900/10 border border-gray-800 rounded-2xl p-8">
+                    <div class="flex justify-between items-start mb-6">
+                        <div>
+                            <div
+                                class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-green-900/30 border border-green-800/50 mb-3">
+                                <i data-lucide="circle" class="w-2 h-2 text-green-400"></i>
+                                <span class="text-sm font-medium text-green-300">Live / Early Version</span>
+                            </div>
+                            <h3 class="text-2xl font-semibold mb-2">LinkedIn Profile Extractor</h3>
+                            <p class="text-gray-400 mb-6">
+                                A Chrome extension that helps users collect LinkedIn profiles and export structured data
+                                into Excel with a single click.
+                            </p>
+                        </div>
+                        <div
+                            class="w-12 h-12 rounded-lg bg-gradient-to-br from-blue-900/30 to-blue-900/10 border border-blue-800/30 flex items-center justify-center">
+                            <i data-lucide="chrome" class="w-6 h-6 text-blue-400"></i>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4 mb-8">
+                        <div class="flex items-center space-x-3">
+                            <i data-lucide="check" class="w-5 h-5 text-cyan-400"></i>
+                            <span class="text-gray-300">Save LinkedIn profiles with one click</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <i data-lucide="check" class="w-5 h-5 text-cyan-400"></i>
+                            <span class="text-gray-300">Extract name, company, title, profile link</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <i data-lucide="check" class="w-5 h-5 text-cyan-400"></i>
+                            <span class="text-gray-300">Export to Excel with structured data</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <i data-lucide="check" class="w-5 h-5 text-cyan-400"></i>
+                            <span class="text-gray-300">Simplify recruiter sourcing workflows</span>
+                        </div>
+                    </div>
+
+                    <a href="#"
+                        class="inline-flex items-center space-x-2 text-cyan-400 hover:text-cyan-300 transition-colors">
+                        <span>Learn more</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+
+                <!-- Product 2 -->
+                <div
+                    class="product-card-hover fade-in bg-gradient-to-br from-gray-900/40 to-gray-900/10 border border-gray-800 rounded-2xl p-8">
+                    <div class="flex justify-between items-start mb-6">
+                        <div>
+                            <div
+                                class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-amber-900/30 border border-amber-800/50 mb-3">
+                                <i data-lucide="circle" class="w-2 h-2 text-amber-400"></i>
+                                <span class="text-sm font-medium text-amber-300">In Development</span>
+                            </div>
+                            <h3 class="text-2xl font-semibold mb-2">Inbox Manager AI Agent</h3>
+                            <p class="text-gray-400 mb-6">
+                                An intelligent workflow tool that organizes inboxes, categorizes messages, and suggests
+                                responses automatically.
+                            </p>
+                        </div>
+                        <div
+                            class="w-12 h-12 rounded-lg bg-gradient-to-br from-purple-900/30 to-purple-900/10 border border-purple-800/30 flex items-center justify-center">
+                            <i data-lucide="bot" class="w-6 h-6 text-purple-400"></i>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4 mb-8">
+                        <div class="flex items-center space-x-3">
+                            <i data-lucide="check" class="w-5 h-5 text-cyan-400"></i>
+                            <span class="text-gray-300">Inbox categorization by priority & type</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <i data-lucide="check" class="w-5 h-5 text-cyan-400"></i>
+                            <span class="text-gray-300">Automated response suggestions</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <i data-lucide="check" class="w-5 h-5 text-cyan-400"></i>
+                            <span class="text-gray-300">Workflow automation for common tasks</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <i data-lucide="check" class="w-5 h-5 text-cyan-400"></i>
+                            <span class="text-gray-300">Smart filtering and follow-up reminders</span>
+                        </div>
+                    </div>
+
+                    <a href="#"
+                        class="inline-flex items-center space-x-2 text-cyan-400 hover:text-cyan-300 transition-colors">
+                        <span>Join waitlist</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experiments Section -->
+    <section id="experiments" class="py-20">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">Future Systems</h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                    Explorations and prototypes of systems that could simplify future workflows.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+                <!-- Experiment 1 -->
+                <div
+                    class="product-card-hover fade-in bg-gradient-to-b from-gray-900/20 to-gray-900/5 border border-gray-800 rounded-xl p-6">
+                    <div
+                        class="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-900/30 to-blue-900/10 border border-blue-800/30 flex items-center justify-center mb-4">
+                        <i data-lucide="search" class="w-5 h-5 text-blue-400"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Lead Research Agent</h3>
+                    <p class="text-gray-400 text-sm mb-4">
+                        AI workflow that researches leads and generates structured prospect reports automatically.
+                    </p>
+                    <div
+                        class="inline-flex items-center space-x-1 px-2 py-1 rounded-md bg-gray-800/50 text-gray-300 text-xs">
+                        <i data-lucide="beaker" class="w-3 h-3"></i>
+                        <span>Concept</span>
+                    </div>
+                </div>
+
+                <!-- Experiment 2 -->
+                <div
+                    class="product-card-hover fade-in bg-gradient-to-b from-gray-900/20 to-gray-900/5 border border-gray-800 rounded-xl p-6">
+                    <div
+                        class="w-10 h-10 rounded-lg bg-gradient-to-br from-cyan-900/30 to-cyan-900/10 border border-cyan-800/30 flex items-center justify-center mb-4">
+                        <i data-lucide="file-text" class="w-5 h-5 text-cyan-400"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Content Repurposing Engine</h3>
+                    <p class="text-gray-400 text-sm mb-4">
+                        Tool that converts long-form content into multiple formats (posts, summaries, newsletters).
+                    </p>
+                    <div
+                        class="inline-flex items-center space-x-1 px-2 py-1 rounded-md bg-gray-800/50 text-gray-300 text-xs">
+                        <i data-lucide="beaker" class="w-3 h-3"></i>
+                        <span>Concept</span>
+                    </div>
+                </div>
+
+                <!-- Experiment 3 -->
+                <div
+                    class="product-card-hover fade-in bg-gradient-to-b from-gray-900/20 to-gray-900/5 border border-gray-800 rounded-xl p-6">
+                    <div
+                        class="w-10 h-10 rounded-lg bg-gradient-to-br from-purple-900/30 to-purple-900/10 border border-purple-800/30 flex items-center justify-center mb-4">
+                        <i data-lucide="layout-grid" class="w-5 h-5 text-purple-400"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Decision Framework Builder</h3>
+                    <p class="text-gray-400 text-sm mb-4">
+                        Tool that helps teams design structured decision systems for consistent outcomes.
+                    </p>
+                    <div
+                        class="inline-flex items-center space-x-1 px-2 py-1 rounded-md bg-gray-800/50 text-gray-300 text-xs">
+                        <i data-lucide="wrench" class="w-3 h-3"></i>
+                        <span>In Development</span>
+                    </div>
+                </div>
+
+                <!-- Experiment 4 -->
+                <div
+                    class="product-card-hover fade-in bg-gradient-to-b from-gray-900/20 to-gray-900/5 border border-gray-800 rounded-xl p-6">
+                    <div
+                        class="w-10 h-10 rounded-lg bg-gradient-to-br from-green-900/30 to-green-900/10 border border-green-800/30 flex items-center justify-center mb-4">
+                        <i data-lucide="clipboard-copy" class="w-5 h-5 text-green-400"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Workflow Automation Templates</h3>
+                    <p class="text-gray-400 text-sm mb-4">
+                        Reusable workflow templates for teams and founders to implement quickly.
+                    </p>
+                    <div
+                        class="inline-flex items-center space-x-1 px-2 py-1 rounded-md bg-gray-800/50 text-gray-300 text-xs">
+                        <i data-lucide="wrench" class="w-3 h-3"></i>
+                        <span>In Development</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lab Notes Section -->
+    <section id="notes" class="py-20 bg-gradient-to-b from-gray-900/10 to-black/0">
+        <div class="container mx-auto px-4">
+            <div class="max-w-5xl mx-auto">
+                <div class="text-center mb-16 fade-in">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-6">Lab Notes</h2>
+                    <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                        Thoughts on systems, tools, and the future of intelligent workflows.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Note 1 -->
+                    <div
+                        class="fade-in bg-gradient-to-br from-gray-900/20 to-gray-900/5 border border-gray-800 rounded-xl p-6 hover:border-gray-700 transition-colors">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-gray-800/50">
+                                <i data-lucide="calendar" class="w-3 h-3 text-gray-400"></i>
+                                <span class="text-sm text-gray-300">2 days ago</span>
+                            </div>
+                            <div class="text-xs text-gray-500">5 min read</div>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3">Why most workflows are unnecessarily complex</h3>
+                        <p class="text-gray-400 mb-6">
+                            Complexity often emerges from legacy decisions, not intentional design. We explore how to
+                            identify and strip away unnecessary layers...
+                        </p>
+                        <a href="#"
+                            class="inline-flex items-center space-x-2 text-cyan-400 hover:text-cyan-300 transition-colors">
+                            <span>Read more</span>
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+
+                    <!-- Note 2 -->
+                    <div
+                        class="fade-in bg-gradient-to-br from-gray-900/20 to-gray-900/5 border border-gray-800 rounded-xl p-6 hover:border-gray-700 transition-colors">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-gray-800/50">
+                                <i data-lucide="calendar" class="w-3 h-3 text-gray-400"></i>
+                                <span class="text-sm text-gray-300">1 week ago</span>
+                            </div>
+                            <div class="text-xs text-gray-500">8 min read</div>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3">Designing systems that reduce cognitive load</h3>
+                        <p class="text-gray-400 mb-6">
+                            The best systems feel invisible. We examine principles for creating workflows that require
+                            minimal mental overhead...
+                        </p>
+                        <a href="#"
+                            class="inline-flex items-center space-x-2 text-cyan-400 hover:text-cyan-300 transition-colors">
+                            <span>Read more</span>
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+
+                    <!-- Note 3 -->
+                    <div
+                        class="fade-in bg-gradient-to-br from-gray-900/20 to-gray-900/5 border border-gray-800 rounded-xl p-6 hover:border-gray-700 transition-colors">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-gray-800/50">
+                                <i data-lucide="calendar" class="w-3 h-3 text-gray-400"></i>
+                                <span class="text-sm text-gray-300">2 weeks ago</span>
+                            </div>
+                            <div class="text-xs text-gray-500">6 min read</div>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3">The future of intelligent workflows</h3>
+                        <p class="text-gray-400 mb-6">
+                            How AI agents and automation will transform how we work, and what it means for system
+                            design...
+                        </p>
+                        <a href="#"
+                            class="inline-flex items-center space-x-2 text-cyan-400 hover:text-cyan-300 transition-colors">
+                            <span>Read more</span>
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+
+                    <!-- Note 4 -->
+                    <div
+                        class="fade-in bg-gradient-to-br from-gray-900/20 to-gray-900/5 border border-gray-800 rounded-xl p-6 hover:border-gray-700 transition-colors">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-gray-800/50">
+                                <i data-lucide="calendar" class="w-3 h-3 text-gray-400"></i>
+                                <span class="text-sm text-gray-300">3 weeks ago</span>
+                            </div>
+                            <div class="text-xs text-gray-500">4 min read</div>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3">Tools vs systems thinking</h3>
+                        <p class="text-gray-400 mb-6">
+                            Why focusing on individual tools often fails, and how to shift perspective to the entire
+                            system...
+                        </p>
+                        <a href="#"
+                            class="inline-flex items-center space-x-2 text-cyan-400 hover:text-cyan-300 transition-colors">
+                            <span>Read more</span>
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="text-center mt-12 fade-in">
+                    <a href="#"
+                        class="inline-flex items-center space-x-2 border border-gray-700 hover:border-cyan-500/50 hover:bg-gray-900/50 rounded-lg font-medium transition-all duration-300 px-6 py-3">
+                        <span>View all lab notes</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-16 fade-in">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-6">Work With MV Labs</h2>
+                    <p class="text-xl text-gray-400 max-w-2xl mx-auto">
+                        MV Labs collaborates with founders, builders, and teams to design better systems and tools.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    <div class="fade-in">
+                        <h3 class="text-2xl font-semibold mb-6">Collaboration Areas</h3>
+                        <div class="space-y-6">
+                            <div class="flex items-start space-x-4">
+                                <div
+                                    class="w-10 h-10 rounded-lg bg-gradient-to-br from-cyan-900/30 to-cyan-900/10 border border-cyan-800/30 flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="users" class="w-5 h-5 text-cyan-400"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-medium mb-2">Workflow Analysis</h4>
+                                    <p class="text-gray-400">We analyze your team's existing workflows to identify
+                                        bottlenecks and complexity.</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start space-x-4">
+                                <div
+                                    class="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-900/30 to-blue-900/10 border border-blue-800/30 flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="package" class="w-5 h-5 text-blue-400"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-medium mb-2">Tool Development</h4>
+                                    <p class="text-gray-400">We design and build custom tools to simplify your specific
+                                        processes.</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start space-x-4">
+                                <div
+                                    class="w-10 h-10 rounded-lg bg-gradient-to-br from-purple-900/30 to-purple-900/10 border border-purple-800/30 flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="brain" class="w-5 h-5 text-purple-400"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-medium mb-2">System Design</h4>
+                                    <p class="text-gray-400">We create holistic system designs that connect tools into
+                                        coherent workflows.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="fade-in">
+                        <div
+                            class="bg-gradient-to-br from-gray-900/40 to-gray-900/10 border border-gray-800 rounded-2xl p-8">
+                            <h3 class="text-2xl font-semibold mb-6">Get in Touch</h3>
+                            <p class="text-gray-400 mb-8">
+                                Interested in collaborating or learning more about our systems approach?
+                            </p>
+
+                            <div class="space-y-4">
+                                <a href="#"
+                                    class="w-full flex items-center justify-center space-x-3 px-6 py-3.5 border border-gray-700 hover:border-cyan-500/50 hover:bg-gray-900/30 rounded-lg font-medium transition-all duration-300">
+                                    <i data-lucide="mail" class="w-5 h-5"></i>
+                                    <span>Send an email</span>
+                                </a>
+
+                                <a href="#"
+                                    class="w-full flex items-center justify-center space-x-3 px-6 py-3.5 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 rounded-lg font-medium transition-all duration-300">
+                                    <i data-lucide="linkedin" class="w-5 h-5"></i>
+                                    <span>Connect on LinkedIn</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-900 py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div
+                            class="w-10 h-10 rounded-md bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center">
+                            <i data-lucide="flask-conical" class="w-5 h-5 text-white"></i>
+                        </div>
+                        <div>
+                            <div class="text-xl font-semibold">MV Labs</div>
+                            <div class="text-gray-400 text-sm">From complexity to clarity.</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-500 max-w-md">
+                        A systems lab designing tools, workflows, and intelligent systems that simplify complex work
+                        processes.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold mb-4">Explore</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#philosophy"
+                                class="text-gray-400 hover:text-cyan-400 transition-colors">Philosophy</a></li>
+                        <li><a href="#products" class="text-gray-400 hover:text-cyan-400 transition-colors">Products</a>
+                        </li>
+                        <li><a href="#experiments"
+                                class="text-gray-400 hover:text-cyan-400 transition-colors">Experiments</a></li>
+                        <li><a href="#notes" class="text-gray-400 hover:text-cyan-400 transition-colors">Lab Notes</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold mb-4">Connect</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#contact" class="text-gray-400 hover:text-cyan-400 transition-colors">Contact</a>
+                        </li>
+                        <li><a href="#" class="text-gray-400 hover:text-cyan-400 transition-colors">LinkedIn</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-cyan-400 transition-colors">Twitter</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-cyan-400 transition-colors">GitHub</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-900 mt-12 pt-8 text-center text-gray-500 text-sm">
+                <p>&copy; 2023 MV Labs. All systems designed for clarity.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top -->
+    <button id="back-to-top"
+        class="fixed bottom-8 right-8 w-12 h-12 rounded-full bg-gray-900/80 backdrop-blur-sm border border-gray-800 flex items-center justify-center hover:bg-gray-800 transition-colors hidden">
+        <i data-lucide="arrow-up" class="w-5 h-5"></i>
+    </button>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            const icon = mobileMenuBtn.querySelector('i');
+            if (mobileMenu.classList.contains('hidden')) {
+                icon.setAttribute('data-lucide', 'menu');
+            } else {
+                icon.setAttribute('data-lucide', 'x');
+            }
+            lucide.createIcons();
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                const icon = mobileMenuBtn.querySelector('i');
+                icon.setAttribute('data-lucide', 'menu');
+                lucide.createIcons();
+            });
+        });
+
+        // Back to top button
+        const backToTopBtn = document.getElementById('back-to-top');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.remove('hidden');
+            } else {
+                backToTopBtn.classList.add('hidden');
+            }
+        });
+
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Fade in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all elements with fade-in class
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
